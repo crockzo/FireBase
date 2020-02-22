@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         mfirebaseDatabase = FirebaseDatabase.getInstance();
 
 //        THIS IS TO REFER TO THE NODE OF THE FIRE BASE DATABASE
-        mRef = mfirebaseDatabase.getReference();
+        mRef = mfirebaseDatabase.getReference("user");
 
 //        THIS IS THE WAY TO CREATE THE CHILD IN THE DATA BASE
 //        mRef = mfirebaseDatabase.getReference("user");
@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
 //                mRef.child("user!").setValue(data);
 
 //                THIS IS TO SET THE VALUE OF TO THE RELATED VALUE  : HERE THE mRef REFERES TO THE NODE
-                mRef.setValue(data);
+                mRef.child("mohit gupta").setValue(data);
+               // mRef.setValue(data);
                 Toast.makeText(MainActivity.this, "data inserted " , Toast.LENGTH_LONG).show();
             }
         });
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 //                THIS IS TO SET THE EVENT LISTENER WHICH GET INVOKED WHEN THE DATA OF THE NODE IS GET UPDATED OR CHANGES
-                mRef.addValueEventListener(new ValueEventListener() {
+                mRef.child("mohit gupta").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                        DATA SNAPSHOT GIVE THE SNAPSHOT OF THE CURRENT NODE TO ACCESS THE VALUE ATTACHED TO THE NODE

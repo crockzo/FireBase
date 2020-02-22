@@ -1,0 +1,51 @@
+
+
+FireBaseDatabase  mDataBase :  is used to point to the data base of the connected account
+
+DatabaseReference mRef : this used to refer the database node
+
+
+#this is to get the instance of the database
+mDataBase = mDataBase.getInstance();
+
+#this command will  give the reference of the parent/root node of the data base
+mRef = mDataBase.getReference();
+
+#this command will give the reference of the specified node
+mRef = mDataBase.getReference("user!");
+
+
+#to access the value of the refered node we set a listener to the node
+mRef.addValueEventListener() ---> this will listen when the value is added or updated AND when the data is removed
+        #with in this function we have two major function
+            1. onDataChange(DataSnapshot ds);
+            #this will take the snapshot of the data base node and through this we can access the value of the referenced node
+                #through DataSnapshot we can read the data from the database
+                ds.getValue(String.class);
+
+            2. onCancelled(DataBaseError dbe);
+            #this will invoked when the value of the node is deleted or an error is occured
+
+
+#to create the reference of the child node
+mRef = mDataBase.getReference("child");
+
+#to access the value of the refered node we set a listener to the node
+mRef.addValueEventListener() ---> this will listen when the value is added or updated AND when the data is removed
+        #with in this function we have two major function
+            1. onDataChange(DataSnapshot ds);
+            #this will take the snapshot of the data base node and through this we can access the value of the referenced node
+                #through DataSnapshot we can read the data from the database
+                ds.getValue(String.class);
+
+            2. onCancelled(DataBaseError dbe);
+            #this will invoked when the value of the node is deleted or an error is occured
+
+
+#another way to create the child is by
+mRef.child("child_name");
+
+#to access this data we use
+mRed.child("child_name").addValueEventListener() -----> then same process
+
+
