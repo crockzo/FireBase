@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mButton , readData;
     private TextView setData;
     private EditText mtext;
+    private String TAG = "mytag";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +53,19 @@ public class MainActivity extends AppCompatActivity {
 //                mRef.child("user!").setValue(data);
 
 //                THIS IS TO SET THE VALUE OF TO THE RELATED VALUE  : HERE THE mRef REFERES TO THE NODE
-                mRef.child("mohit gupta").setValue(data);
+                mRef.child("mohit gupta").setValue(data)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(MainActivity.this, "write successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "onFailure: permissiion denied");
+                            }
+                        });
                // mRef.setValue(data);
                 Toast.makeText(MainActivity.this, "data inserted " , Toast.LENGTH_LONG).show();
             }
@@ -70,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Log.d(TAG, "onCancelled: failed in reading");
                     }
                 });
             }
