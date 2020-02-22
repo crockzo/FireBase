@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView setData;
     private EditText mtext;
     private String TAG = "mytag";
+    private ValueEventListener mValuelistener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(MainActivity.this, "write successfully", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "onSuccess: "+"dataloaded");
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -76,22 +78,45 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                THIS IS TO SET THE EVENT LISTENER WHICH GET INVOKED WHEN THE DATA OF THE NODE IS GET UPDATED OR CHANGES
-                mRef.child("mohit gupta").addValueEventListener(new ValueEventListener() {
+                mValuelistener = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        DATA SNAPSHOT GIVE THE SNAPSHOT OF THE CURRENT NODE TO ACCESS THE VALUE ATTACHED TO THE NODE
+                        //                        DATA SNAPSHOT GIVE THE SNAPSHOT OF THE CURRENT NODE TO ACCESS THE VALUE ATTACHED TO THE NODE
+                        String data = dataSnapshot.getValue(String.class);
+                        setData.setText(data);
+                        Log.d(TAG, "onDataChange: " + data);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.d(TAG, "onCancelled: failed in reading");
+
+                    }
+                };
+//                THIS IS TO SET THE EVENT LISTENER WHICH GET INVOKED WHEN THE DATA OF THE NODE IS GET UPDATED OR CHANGES
+                mRef.child("mohit gupta").addValueEventListener(mValuelistener);/*(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        DATA SNAPSHOT GIVE THE SNAPSHOT OF THE CURRENT NODE TO ACCESS THE VALUE ATTACHED TO THE NODE
                             String data = dataSnapshot.getValue(String.class);
                             setData.setText(data);
+                        Log.d(TAG, "onDataChange: " + data);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.d(TAG, "onCancelled: failed in reading");
                     }
-                });
+                });*/
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mRef.child("mohit gupta").removeEventListener(mValuelistener);
     }
 
     public void init(){
