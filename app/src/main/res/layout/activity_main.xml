@@ -16,6 +16,17 @@
         android:layout_gravity="center"
         android:textColorHint="#b3b3b3"
         />
+
+
+    <EditText
+        android:id="@+id/setAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="enter age"
+        android:textAllCaps="true"
+        android:layout_gravity="center"
+        android:textColorHint="#b3b3b3"
+        />
     <Button
         android:id="@+id/sendData"
         android:layout_gravity="center"

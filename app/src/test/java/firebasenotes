@@ -1,8 +1,10 @@
 
+#this is used to point to the data base of the connected account
+FireBaseDatabase  mDataBase ;
 
-FireBaseDatabase  mDataBase :  is used to point to the data base of the connected account
 
-DatabaseReference mRef : this used to refer the database node
+# this used to refer the database node
+DatabaseReference mRef ;
 
 
 #this is to get the instance of the database
@@ -48,4 +50,28 @@ mRef.child("child_name");
 #to access this data we use
 mRed.child("child_name").addValueEventListener() -----> then same process
 
+
+#to give only one listener to a specific node we use the valueEventListener
+ValueEventListener mValueListener = new ValueEventListener(){....onDataChange() ..... onCancelled()....}
+#to destroy this listener we destroy it in the onDestroy()
+mRef.child(child_name).removeEventListener();
+
+**PROCESS TO INSERT AND READ THE DATA **
+
+1.  CREATE THE DATABASE OBJECT ---- FireBaseDatabase
+2.  GIVE THE REFERENCE OF A NODE TO A DatabaseReference ----DataBaseReference
+3.  SET VALUE TO THE REFERENCE TO THE NODE ---- setValue(); WE CAN CHECK IF THE TASK IS SUCCESSFUL OR FAILURE
+4.  TO READ THE VALUE FROM THE DATABASE ADD A AddValueEventListener(ValueEventListener);
+5.  REMOVE THE EVENT LISTENER IN THE DESTROY BY mRef.child(child_name).removeEventListener();
+
+------------------------------
+
+#to create the push key
+mRef.push()
+
+#to get the reference of the generated key
+String key = mRef.push().getKey().tostring();
+
+#to create the child node explicitely
+mRef.child(key).child("name").setValue("mohit gupta");
 
