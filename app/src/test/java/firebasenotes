@@ -75,3 +75,30 @@ String key = mRef.push().getKey().tostring();
 #to create the child node explicitely
 mRef.child(key).child("name").setValue("mohit gupta");
 
+
+
+#INSERT
+mRef.setValue("value");
+mRef.child("child_name").setValue("value");
+
+adding success and failure to the mRef
+-
+  .addOnSuccessListener(new OnSuccessListener<Void>() {
+       @Override
+        public void onSuccess(Void aVoid) {
+           Toast.makeText(MainActivity.this, "write successfully", Toast.LENGTH_SHORT).show();
+           Log.d(TAG, "onSuccess: "+"dataloaded");
+                            }
+                        })
+
+  .addOnFailureListener(new OnFailureListener() {
+          @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: permissiion denied");
+                            }
+                        });
+
+#READING DATA FROM DATABASE
+add a event listener to the mRef(reference of the child in database)
+take the data from the database snapshot (snapshot have the snapshot of the specified child data(key-->value))
+WE CAN TAKE THE VALUE OF THE SNAPSHOT IN THE FORM OF STRING AND MAP FORMAT    ---->    snapshot.getValue(GENERIC CLASS);
