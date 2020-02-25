@@ -60,8 +60,8 @@ mRef.child(child_name).removeEventListener();
 
 1.  CREATE THE DATABASE OBJECT ---- FireBaseDatabase
 2.  GIVE THE REFERENCE OF A NODE TO A DatabaseReference ----DataBaseReference
-3.  SET VALUE TO THE REFERENCE TO THE NODE ---- setValue(); WE CAN CHECK IF THE TASK IS SUCCESSFUL OR FAILURE
-4.  TO READ THE VALUE FROM THE DATABASE ADD A AddValueEventListener(ValueEventListener);
+3.  SET VALUE TO THE REFERENCE TO THE NODE ---- mRef.setValue(); WE CAN CHECK IF THE TASK IS SUCCESSFUL OR FAILURE
+4.  TO READ THE VALUE FROM THE DATABASE with specific referenced node ADD A AddValueEventListener(ValueEventListener);
 5.  REMOVE THE EVENT LISTENER IN THE DESTROY BY mRef.child(child_name).removeEventListener();
 
 ------------------------------
@@ -94,7 +94,7 @@ adding success and failure to the mRef
   .addOnFailureListener(new OnFailureListener() {
           @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: permissiion denied");
+                Log.d(TAG, "onFailure: permission denied");
                             }
                         });
 
@@ -102,3 +102,22 @@ adding success and failure to the mRef
 add a event listener to the mRef(reference of the child in database)
 take the data from the database snapshot (snapshot have the snapshot of the specified child data(key-->value))
 WE CAN TAKE THE VALUE OF THE SNAPSHOT IN THE FORM OF STRING AND MAP FORMAT    ---->    snapshot.getValue(GENERIC CLASS);
+
+ Map<String,Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                         String data = map.get("name").toString();
+
+----------------------------------
+#to get the content of the parent node in the form of list (Map  --> key - value)
+onDataChange(databaseSnapshot ds){
+    for(DatabaseSnapshot snapshot : ds.getChildren()){
+        Map<String , Object> map = (Map<String , object>) snapshot.getValue();
+         Log.d(TAG, "onChildAdded: key " + dataSnapshot.getKey() );
+         Log.d(TAG, "onChildAdded: name " + map.get("name"));
+         Log.d(TAG, "onChildAdded: age" + map.get("age"));
+
+#to set the multi key and values of the  node at a same time
+Map<String , Object > map = new HashMap<>;
+map.put("/path/",value);
+map.put("/path2/",value);
+mRef.child("Child_id").setValues(map);
+
