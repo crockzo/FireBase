@@ -125,5 +125,6 @@ mRef.child("Child_id").setValues(map);
 
 #to set a clickListener to a child in the recycler view
 add the clickListener to any of the view in the recycler child view
-
+#learned about computer vision
+tommoro is my presentation on this
 
