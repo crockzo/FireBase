@@ -1,5 +1,7 @@
 package com.example.firebase.PaymentData;
 
+import androidx.annotation.Nullable;
+
 public class PaymentData {
     String uId;
     String amount ;
@@ -47,5 +49,15 @@ public class PaymentData {
 
     public void setMonth(String month) {
         this.month = month;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof PaymentData){
+            PaymentData pd = (PaymentData) obj;
+            return this.uId.equals(pd.getuId());
+        }else{
+            return false;
+        }
     }
 }

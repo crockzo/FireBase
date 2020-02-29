@@ -105,7 +105,14 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                      try{
+                          PaymentData paymentData = dataSnapshot.getValue(PaymentData.class);
+                          paymentData.setuId(dataSnapshot.getKey());
+                          mList.remove(paymentData);
+                          mAdaptor.notifyDataSetChanged();
+                      }catch (Exception e){
 
+                      }
                     }
 
                     @Override
